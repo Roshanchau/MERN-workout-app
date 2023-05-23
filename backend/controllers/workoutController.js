@@ -2,7 +2,8 @@ const Workout = require("../models/workoutModel");
 const mongoose = require("mongoose");
 //get all workouts
 const getWorkouts = async (req, res) => {
-  const workouts = await Workout.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+  const workouts = await Workout.find({user_id}).sort({ createdAt: -1 });
   res.status(200).json(workouts);
 };
 
@@ -45,7 +46,9 @@ const createWorkout = async (req, res) => {
 
   //add doc to db
   try {
-    const workout = await Workout.create({ title, load, reps });
+    // so we added the user property to the req as req.user in the authContext so we can use it here to get the user id
+    const user_id = req.user._id;
+    const workout = await Workout.create({ title, load, reps, user_id });
     res.status(200).json(workout);
   } catch (error) {
     res.status(400).json({ error: error.message });

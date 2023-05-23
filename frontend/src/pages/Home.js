@@ -15,7 +15,7 @@ const Home = () => {
     const fetchWorkouts = async () => {
       const response = await fetch("/api/workouts" , {
         headers:{
-            "Authorization": `Bearer ${user.token}`
+            'Authorization': `Bearer ${user.token}`
         }
       }); 
       const json = await response.json(); // we parse the workout response and get an array of workout objects.
@@ -23,10 +23,10 @@ const Home = () => {
         //after getting the response we fire the dispatch function which invokes the workoutsReducer function in the workoutContext.js and passes the passes in the action which is the (type:"same as below" , payload:is the json which is the whole response while fetching the data. )
         dispatch({ type: "SET_WORKOUTS", payload: json });
       }
-    };
+    };  
 
     if (user) {
-      fetchWorkouts();
+      fetchWorkouts();  
     }
   }, [dispatch , user]); //we use an empty array so that the effect hook works only one time
 
